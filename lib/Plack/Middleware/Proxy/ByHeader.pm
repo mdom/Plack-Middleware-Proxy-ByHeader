@@ -77,7 +77,8 @@ Plack::App::Proxy to proxy the request.
 
 If any of the header field names set with the option I<header> is present
 in the request and if its value matches one of the allowed values,
-the requests I<HOST> header and I<plack.proxy.url> are set to this value.
+I<plack.proxy.url> is set to the request uri with the hostname changed
+to the value of the header field.
 
 The first present header short circuts the check even its value is not
 allowed. In this case the request is left unchanged.
