@@ -6,7 +6,7 @@ use parent 'Plack::Middleware';
 
 use Plack::Util::Accessor qw(header allowed);
 use Plack::Request;
-use Carp;
+use Carp qw(croak);
 
 our $VERSION = '0.01';
 
@@ -32,19 +32,19 @@ sub call {
     my $uri  = $req->uri;
     my $host = $req->header( $self->header );
 
-    if ( $host ) {
-        if ( ref($host) eq 'ARRAY' and @$host) {
+    if ($host) {
+        if ( ref($host) eq 'ARRAY' and @$host ) {
             $host = $host->[-1];
         }
 
-	my $allow = 1;
-	if ( @{ $self->allowed } ) {
-		my %allowed = map { $_ => 1 } @{ $self->allowed };
-		$allow = 0 if not $allowed{$host};
-	}
+        my $allow = 1;
+        if ( @{ $self->allowed } ) {
+            my %allowed = map { $_ => 1 } @{ $self->allowed };
+            $allow = 0 if not $allowed{$host};
+        }
 
-        if ( $allow ) {
-	    $uri->host($host);
+        if ($allow) {
+            $uri->host($host);
             $env->{'plack.proxy.url'} = $uri;
         }
     }
