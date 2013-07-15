@@ -30,7 +30,12 @@ sub call {
 
     my $req  = Plack::Request->new($env);
     my $uri  = $req->uri;
-    my $host = $req->header( $self->header );
+
+    my $host;
+    for my $header ( @{$self->header} ) {
+	$host = $req->header($header);
+	last if $host;
+    }
 
     if ($host) {
         if ( ref($host) eq 'ARRAY' and @$host ) {
