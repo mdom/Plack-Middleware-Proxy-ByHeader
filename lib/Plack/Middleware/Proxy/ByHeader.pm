@@ -39,7 +39,7 @@ sub call {
 
 	my $allow = 1;
 	if ( @{ $self->allowed } ) {
-		%allowed = map { $_ => 1 } @{ $self->allowed }
+		my %allowed = map { $_ => 1 } @{ $self->allowed };
 		$allow = 0 if not $allowed{$host};
 	}
 
