@@ -14,7 +14,7 @@ sub prepare_app {
     my $self = shift;
 
     $self->header( ['Host'] ) if !defined $self->header;
-    $self->allowed( [] ) if !defined $self->to;
+    $self->allowed( [] ) if !defined $self->allowed;
 
     croak("argument to 'allowed' must be an array reference")
       if not( ref( $self->allowed ) eq 'ARRAY' );
