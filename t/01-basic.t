@@ -21,6 +21,14 @@ $err =~ s/ at .*//;
 is( $err, q{argument to 'allowed' must be an array reference} );
 
 test_by_header(
+    req_header  => [ Host => 'example.com', 'X-Taz-Proxy-To' => 'www.example.com', 'X-Taz-Proxy-To' => 'www2.example.com' ],
+    by_header   => [ 'X-Taz-Proxy-To', 'Host' ],
+    allowed     => [ 'example.com', 'www.example.com','www2.example.com'],
+    expect      => 'http://www2.example.com/foo',
+    description => 'use last value if header is sent multiple times',
+);
+
+test_by_header(
     req_header  => [ Host => 'example.com', 'X-Taz-Proxy-To' => 'www.example.com' ],
     by_header   => [ 'X-Taz-Proxy-To', 'Host' ],
     allowed     => [ 'example.com', 'www.example.com'],
@@ -67,6 +75,15 @@ test_by_header(
     expect      => '',
     description => 'no header, no allowed, no req header, no plack.proxy.url',
 );
+
+test_by_header(
+    req_header  => [ 'X-Taz-Proxy-To' => 'www.example.com' ],
+    by_header   => [ 'X-Taz-Proxy-To' ],
+    allowed     => [],
+    expect      => 'http://www.example.com/foo',
+    description => 'empty allow allowes everything',
+);
+
 
 sub test_by_header {
     my %arg = @_;

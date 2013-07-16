@@ -38,9 +38,7 @@ sub call {
     }
 
     if ($host) {
-        if ( ref($host) eq 'ARRAY' and @$host ) {
-            $host = $host->[-1];
-        }
+	my $host = (split(/\s*,\s*/,$host))[-1];
 
         my $allow = 1;
         if ( @{ $self->allowed } ) {
