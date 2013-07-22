@@ -83,7 +83,7 @@ in the request and if its value matches one of the allowed values,
 I<plack.proxy.url> is set to the request uri with the hostname changed
 to the value of the header field.
 
-The first present header short circuts the check even its value is not
+The first present header short circuits the check even its value is not
 allowed. In this case the request is left unchanged.
 
 If multiple headers with the same field name are present, the last
@@ -95,7 +95,7 @@ value is used.
 
 =item header
 
-An array referece of headers to check. Defaults to the I<HOST> header.
+An array reference of headers to check. Defaults to the I<HOST> header.
 
 =item allowed
 
